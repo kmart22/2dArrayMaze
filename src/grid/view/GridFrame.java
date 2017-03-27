@@ -24,9 +24,14 @@ public class GridFrame extends JFrame
 	private void setupFrame()
 	{
 		this.setContentPane(gridPanel);
-		this.setSize(new Dimension(600, 400));
+		this.setSize(new Dimension(600, 500));
 		this.setTitle("2D Array Maze 2017");
 		this.setResizable(false);
 		this.setVisible(true);
+	}
+	
+	public GridController getBaseController() 
+	{
+		return baseController;
 	}
 }

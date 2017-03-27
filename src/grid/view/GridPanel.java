@@ -4,6 +4,13 @@ import javax.swing.table.*;
 import java.awt.Dimension;
 import java.awt.Color;
 import grid.controller.GridController;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import grid.model.*;
+import javax.swing.border.TitledBorder;
+import javax.swing.table.*;
+import grid.model.Number;
+
 
 
 public class GridPanel extends JPanel
@@ -17,6 +24,7 @@ public class GridPanel extends JPanel
 	private JButton submitButton;
 	private JTable gridTable;
 	private JScrollPane gridPane;
+	private JLabel submitLabel;
 	
 	private SpringLayout baseLayout;
 	private GridController baseController;
@@ -33,6 +41,8 @@ public class GridPanel extends JPanel
 		this.colLabel = new JLabel("colLabel");
 		this.submitButton = new JButton("sumbitButton");
 		this.gridTable = new JTable();
+		this.colField = new JTextField("colField");
+		this.submitLabel = new JLabel("submit");
 		
 		this.baseLayout = new SpringLayout();
 		
@@ -48,10 +58,11 @@ public class GridPanel extends JPanel
 	private void setupTable()
 	{
 		//load model
-		DefaultTableModel data = new DefaultTableModel(baseController.getGrid(), new String []{"one", "two", "three", "four", "five"});
+		DefaultTableModel data = new DefaultTableModel(baseController.getGrid(), new String []{"Col: 0", "Col: 1", "Col: 2", "Col: 3", "Col: 4"});
 		gridTable = new JTable();
 		gridTable.setModel(data);
 		gridPane = new JScrollPane();
+		
 		
 		gridPane.setViewportView(gridTable);
 	}
@@ -59,7 +70,7 @@ public class GridPanel extends JPanel
 	private void setupPanel()
 	{
 		this.setLayout(baseLayout);
-		this.setMinimumSize(new Dimension(700, 700));
+		this.setMinimumSize(new Dimension(900, 700));
 		this.setBackground(Color.PINK);
 		this.add(gridPane);
 		
@@ -69,9 +80,8 @@ public class GridPanel extends JPanel
 		this.add(rowLabel);
 		this.add(colLabel);
 		this.add(submitButton);
-		this.colField = new JTextField("colField");
-		
-		add(colField);
+		this.add(colField);
+		this.add(submitLabel);
 		
 	}
 	
@@ -99,7 +109,14 @@ public class GridPanel extends JPanel
 	
 	private void setupListeners()
 	{
-		
+		submitButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent click)
+			{
+				baseController.updateNumber(rowField.getText(), colField.getText(), inputField.getText());
+				repaint();
+			}
+		});
 	}
 
 	public GridController getBaseController()
